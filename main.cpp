@@ -2,9 +2,19 @@
 #include <map>
 #include <vector>
 #include <algorithm>
+#include <iterator>
+#include <utility>
 
 using std::vector;
 using std::map;
+
+namespace std {
+    std::ostream & operator<<(std::ostream & os, const std::pair<int,int> & pr)
+    {
+        os << pr.first << ": " << pr.second;
+        return os;
+    }
+}
 
 class solution {
   public:
@@ -12,9 +22,10 @@ class solution {
         map<int,int> dict;
         for (auto n : nums) {
             if (dict.find(n) == dict.end())
-                dict[n] = 1;
+                dict[n] = 0;
             dict[n] += 1;
         }
+        std::copy(dict.begin(), dict.end(), std::ostream_iterator<std::pair<int,int>>(std::cout, "\n"));
 
         vector<int> freq;
         while (k-- > 0) {
